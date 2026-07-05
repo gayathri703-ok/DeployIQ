@@ -1,0 +1,58 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{js,jsx}"],
+  theme: {
+    extend: {
+      fontFamily: {
+        mono:    ["'JetBrains Mono'", "monospace"],
+        display: ["'Syne'", "sans-serif"],
+        sans:    ["'DM Sans'", "sans-serif"],
+      },
+      colors: {
+        bg:       "#07090e",
+        surface:  "#0d1117",
+        surface2: "#131920",
+        surface3: "#1a2232",
+        border:   "#1e2a3a",
+        border2:  "#263348",
+        accent:   "#6366f1",
+        "accent-h":"#5254cc",
+        cyan:     "#06b6d4",
+        green:    "#10b981",
+        red:      "#f43f5e",
+        orange:   "#f97316",
+        yellow:   "#f59e0b",
+        muted:    "#3d5270",
+        dim:      "#6b80a0",
+        text:     "#dce8f8",
+      },
+      boxShadow: {
+        accent: "0 0 24px rgba(99,102,241,0.18)",
+        green:  "0 0 20px rgba(16,185,129,0.15)",
+        red:    "0 0 20px rgba(244,63,94,0.15)",
+        card:   "0 4px 24px rgba(0,0,0,0.4)",
+      },
+      keyframes: {
+        up:    { from:{opacity:0,transform:"translateY(14px)"},to:{opacity:1,transform:"translateY(0)"} },
+        left:  { from:{opacity:0,transform:"translateX(-10px)"},to:{opacity:1,transform:"translateX(0)"} },
+        fade:  { from:{opacity:0},to:{opacity:1} },
+        blink: { "0%,100%":{opacity:1},"50%":{opacity:0} },
+        pulse: { "0%,100%":{boxShadow:"0 0 0 0 currentColor"},"50%":{boxShadow:"0 0 0 5px transparent"} },
+        spin:  { to:{transform:"rotate(360deg)"} },
+        scan:  { "0%":{top:"-10%"},"100%":{top:"110%"} },
+        width: { from:{width:"0%"},to:{width:"100%"} },
+      },
+      animation: {
+        up:    "up 0.4s cubic-bezier(0.16,1,0.3,1) both",
+        left:  "left 0.3s ease both",
+        fade:  "fade 0.3s ease both",
+        blink: "blink 1s step-end infinite",
+        pulse: "pulse 2s ease-in-out infinite",
+        spin:  "spin 0.8s linear infinite",
+        scan:  "scan 3s linear infinite",
+        width: "width 0.6s ease both",
+      },
+    },
+  },
+  plugins: [],
+};
