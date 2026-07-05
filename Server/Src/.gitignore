@@ -1,0 +1,7 @@
+node_modules/
+.env
+repos/
+logs/
+nginx/sites/
+*.log
+.DS_Store

@@ -1,0 +1,22 @@
+# ============================================
+# DAY 20 — Production Dockerfile for DeployIQ
+# ============================================
+FROM node:18-alpine
+
+# Install system dependencies for Dockerode
+RUN apk add --no-cache python3 make g++
+
+WORKDIR /app
+
+# Copy deps first (better layer caching)
+COPY package*.json ./
+RUN npm install --production
+
+COPY . .
+
+# Create directories
+RUN mkdir -p /app/repos /app/logs /app/nginx/sites
+
+EXPOSE 5000
+
+CMD ["node", "server.js"]

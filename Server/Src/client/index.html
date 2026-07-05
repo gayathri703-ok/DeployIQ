@@ -1,0 +1,548 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Syne:wght@400;500;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --iq-bg: #0d0f14;
+    --iq-surface: #13161e;
+    --iq-surface2: #1a1d28;
+    --iq-border: rgba(255,255,255,0.07);
+    --iq-border2: rgba(255,255,255,0.12);
+    --iq-text: #e8eaf0;
+    --iq-muted: #6b7280;
+    --iq-accent: #6c63ff;
+    --iq-accent2: #00d4aa;
+    --iq-danger: #ff4f6a;
+    --iq-warn: #f59e0b;
+    --iq-success: #10b981;
+    --iq-mono: 'JetBrains Mono', monospace;
+    --iq-sans: 'Syne', sans-serif;
+  }
+
+  #deployiq-root {
+    font-family: var(--iq-sans);
+    background: var(--iq-bg);
+    color: var(--iq-text);
+    min-height: 620px;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Top Nav */
+  .iq-topnav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px;
+    height: 52px;
+    background: var(--iq-surface);
+    border-bottom: 1px solid var(--iq-border);
+  }
+  .iq-logo {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 15px; font-weight: 700; letter-spacing: -0.3px;
+  }
+  .iq-logo-mark {
+    width: 26px; height: 26px; border-radius: 6px;
+    background: linear-gradient(135deg, var(--iq-accent), var(--iq-accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #fff;
+  }
+  .iq-nav-tabs {
+    display: flex; gap: 2px;
+  }
+  .iq-tab {
+    padding: 6px 14px; border-radius: 6px; font-size: 13px;
+    cursor: pointer; color: var(--iq-muted); transition: all .15s;
+    font-family: var(--iq-sans); border: none; background: none;
+  }
+  .iq-tab:hover { color: var(--iq-text); background: var(--iq-surface2); }
+  .iq-tab.active { color: var(--iq-text); background: var(--iq-surface2); }
+  .iq-nav-right { display: flex; align-items: center; gap: 10px; }
+  .iq-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: linear-gradient(135deg, #6c63ff, #00d4aa);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #fff; cursor: pointer;
+  }
+  .iq-btn-sm {
+    padding: 5px 12px; border-radius: 6px; font-size: 12px;
+    cursor: pointer; font-family: var(--iq-sans); font-weight: 500;
+    border: 1px solid var(--iq-border2); background: var(--iq-surface2);
+    color: var(--iq-text); transition: all .15s; display: flex; align-items: center; gap: 5px;
+  }
+  .iq-btn-sm:hover { background: rgba(108,99,255,0.2); border-color: var(--iq-accent); }
+  .iq-btn-primary {
+    background: var(--iq-accent); border-color: var(--iq-accent); color: #fff;
+  }
+  .iq-btn-primary:hover { background: #5a52e0; border-color: #5a52e0; }
+
+  /* Body layout */
+  .iq-body { display: flex; flex: 1; }
+
+  /* Sidebar */
+  .iq-sidebar {
+    width: 56px; background: var(--iq-surface);
+    border-right: 1px solid var(--iq-border);
+    display: flex; flex-direction: column; align-items: center;
+    padding: 12px 0; gap: 4px;
+  }
+  .iq-sicon {
+    width: 36px; height: 36px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--iq-muted); transition: all .15s;
+    font-size: 17px;
+  }
+  .iq-sicon:hover { color: var(--iq-text); background: var(--iq-surface2); }
+  .iq-sicon.active { color: var(--iq-accent); background: rgba(108,99,255,0.15); }
+  .iq-sicon-sep { width: 28px; height: 1px; background: var(--iq-border); margin: 6px 0; }
+
+  /* Main content */
+  .iq-main { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+
+  /* Section header */
+  .iq-section-header {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;
+  }
+  .iq-section-title { font-size: 13px; font-weight: 500; color: var(--iq-muted); letter-spacing: 0.5px; text-transform: uppercase; }
+
+  /* Stat cards */
+  .iq-stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .iq-stat {
+    background: var(--iq-surface); border: 1px solid var(--iq-border);
+    border-radius: 10px; padding: 14px 16px; position: relative; overflow: hidden;
+  }
+  .iq-stat::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  }
+  .iq-stat.s-purple::before { background: var(--iq-accent); }
+  .iq-stat.s-green::before { background: var(--iq-success); }
+  .iq-stat.s-red::before { background: var(--iq-danger); }
+  .iq-stat.s-teal::before { background: var(--iq-accent2); }
+  .iq-stat-label { font-size: 11px; color: var(--iq-muted); margin-bottom: 6px; font-weight: 500; }
+  .iq-stat-val { font-size: 26px; font-weight: 700; letter-spacing: -1px; }
+  .iq-stat-sub { font-size: 11px; color: var(--iq-muted); margin-top: 4px; }
+  .iq-stat-sub span { color: var(--iq-success); }
+  .iq-stat-sub span.neg { color: var(--iq-danger); }
+
+  /* Two-col layout */
+  .iq-two-col { display: grid; grid-template-columns: 1fr 340px; gap: 14px; }
+
+  /* Card */
+  .iq-card {
+    background: var(--iq-surface); border: 1px solid var(--iq-border);
+    border-radius: 10px; overflow: hidden;
+  }
+  .iq-card-head {
+    padding: 13px 16px; border-bottom: 1px solid var(--iq-border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .iq-card-title { font-size: 13px; font-weight: 500; }
+  .iq-card-body { padding: 14px 16px; }
+
+  /* Deployments list */
+  .iq-deploy-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid var(--iq-border);
+    cursor: pointer; transition: all .12s;
+  }
+  .iq-deploy-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .iq-deploy-item:first-child { padding-top: 0; }
+  .iq-deploy-item:hover { opacity: 0.8; }
+  .iq-deploy-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .iq-deploy-dot.ok { background: var(--iq-success); box-shadow: 0 0 6px var(--iq-success); }
+  .iq-deploy-dot.fail { background: var(--iq-danger); }
+  .iq-deploy-dot.building { background: var(--iq-warn); animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .iq-deploy-info { flex: 1; min-width: 0; }
+  .iq-deploy-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .iq-deploy-meta { font-size: 11px; color: var(--iq-muted); margin-top: 2px; }
+  .iq-deploy-right { text-align: right; flex-shrink: 0; }
+  .iq-deploy-time { font-size: 11px; color: var(--iq-muted); }
+  .iq-badge {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 500;
+    font-family: var(--iq-mono);
+  }
+  .iq-badge.ok { background: rgba(16,185,129,0.15); color: #10b981; }
+  .iq-badge.fail { background: rgba(255,79,106,0.15); color: #ff4f6a; }
+  .iq-badge.building { background: rgba(245,158,11,0.15); color: #f59e0b; }
+  .iq-badge.idle { background: rgba(107,114,128,0.2); color: #9ca3af; }
+
+  /* Activity mini-chart (SVG bars) */
+  .iq-chart-area { padding: 6px 0; }
+
+  /* Log terminal */
+  .iq-log-box {
+    background: #0a0c10; border: 1px solid var(--iq-border);
+    border-radius: 8px; padding: 12px; font-family: var(--iq-mono);
+    font-size: 11px; line-height: 1.7; color: #8b9ab3; max-height: 160px; overflow-y: auto;
+  }
+  .iq-log-line { display: flex; gap: 10px; }
+  .iq-log-time { color: #3d4a60; flex-shrink: 0; }
+  .iq-log-ok { color: var(--iq-success); }
+  .iq-log-err { color: var(--iq-danger); }
+  .iq-log-warn { color: var(--iq-warn); }
+  .iq-log-info { color: var(--iq-accent2); }
+
+  /* AI panel */
+  .iq-ai-panel {
+    background: var(--iq-surface2);
+    border: 1px solid rgba(108,99,255,0.3);
+    border-radius: 10px; padding: 14px;
+  }
+  .iq-ai-header {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+  }
+  .iq-ai-icon {
+    width: 24px; height: 24px; border-radius: 6px;
+    background: linear-gradient(135deg, var(--iq-accent), #a78bfa);
+    display: flex; align-items: center; justify-content: center; font-size: 11px;
+  }
+  .iq-ai-title { font-size: 12px; font-weight: 500; }
+  .iq-ai-badge { font-size: 10px; padding: 1px 6px; border-radius: 10px; background: rgba(108,99,255,0.2); color: #a78bfa; margin-left: auto; }
+  .iq-ai-error {
+    background: rgba(255,79,106,0.08); border: 1px solid rgba(255,79,106,0.2);
+    border-radius: 6px; padding: 8px 10px; font-family: var(--iq-mono); font-size: 11px;
+    color: #ff7a8a; margin-bottom: 10px;
+  }
+  .iq-ai-explain { font-size: 12px; color: #c4c9d8; line-height: 1.6; margin-bottom: 10px; }
+  .iq-ai-fix {
+    background: rgba(0,212,170,0.06); border: 1px solid rgba(0,212,170,0.2);
+    border-radius: 6px; padding: 8px 10px; font-family: var(--iq-mono); font-size: 11px; color: #00d4aa;
+  }
+  .iq-ai-fix-label { font-size: 10px; color: var(--iq-muted); margin-bottom: 4px; }
+
+  /* Env vars */
+  .iq-env-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 0; border-bottom: 1px solid var(--iq-border); font-size: 12px;
+  }
+  .iq-env-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .iq-env-item:first-child { padding-top: 0; }
+  .iq-env-key { font-family: var(--iq-mono); color: var(--iq-accent2); flex: 1; }
+  .iq-env-val { font-family: var(--iq-mono); color: var(--iq-muted); }
+
+  /* Minibar chart */
+  .iq-bars { display: flex; align-items: flex-end; gap: 3px; height: 48px; }
+  .iq-bar { flex: 1; border-radius: 3px 3px 0 0; transition: opacity .15s; cursor: pointer; }
+  .iq-bar:hover { opacity: 0.7; }
+
+  /* Uptime line */
+  .iq-uptime-row { display: flex; gap: 2px; margin-top: 8px; }
+  .iq-uptime-seg {
+    flex: 1; height: 5px; border-radius: 2px;
+  }
+
+  /* Tab switcher */
+  .iq-tabs-inner { display: flex; gap: 2px; background: var(--iq-surface2); border-radius: 7px; padding: 3px; }
+  .iq-itab {
+    padding: 4px 10px; border-radius: 5px; font-size: 11px;
+    cursor: pointer; color: var(--iq-muted); border: none; background: none; font-family: var(--iq-sans);
+    transition: all .15s;
+  }
+  .iq-itab.active { background: var(--iq-surface); color: var(--iq-text); }
+
+  .iq-notif {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--iq-danger);
+    position: absolute; top: 6px; right: 6px;
+  }
+</style>
+
+<div id="deployiq-root">
+  <!-- Top nav -->
+  <div class="iq-topnav">
+    <div class="iq-logo">
+      <div class="iq-logo-mark">IQ</div>
+      DeployIQ
+    </div>
+    <div class="iq-nav-tabs">
+      <button class="iq-tab active">Overview</button>
+      <button class="iq-tab">Projects</button>
+      <button class="iq-tab">Deployments</button>
+      <button class="iq-tab">Analytics</button>
+      <button class="iq-tab">Settings</button>
+    </div>
+    <div class="iq-nav-right">
+      <button class="iq-btn-sm iq-btn-primary" onclick="sendPrompt('How do I deploy a new project on DeployIQ?')">
+        <i class="ti ti-plus"></i> Deploy
+      </button>
+      <div class="iq-avatar">JS</div>
+    </div>
+  </div>
+
+  <div class="iq-body">
+    <!-- Sidebar icons -->
+    <div class="iq-sidebar">
+      <div class="iq-sicon active"><i class="ti ti-layout-dashboard"></i></div>
+      <div class="iq-sicon" style="position:relative"><i class="ti ti-brand-github"></i><div class="iq-notif"></div></div>
+      <div class="iq-sicon"><i class="ti ti-rocket"></i></div>
+      <div class="iq-sicon"><i class="ti ti-terminal-2"></i></div>
+      <div class="iq-sicon-sep"></div>
+      <div class="iq-sicon"><i class="ti ti-chart-bar"></i></div>
+      <div class="iq-sicon"><i class="ti ti-key"></i></div>
+      <div class="iq-sicon"><i class="ti ti-users"></i></div>
+      <div class="iq-sicon-sep"></div>
+      <div class="iq-sicon" style="margin-top:auto"><i class="ti ti-settings"></i></div>
+    </div>
+
+    <!-- Main -->
+    <div class="iq-main">
+
+      <!-- Stat row -->
+      <div class="iq-stat-row">
+        <div class="iq-stat s-purple">
+          <div class="iq-stat-label">Total Projects</div>
+          <div class="iq-stat-val">12</div>
+          <div class="iq-stat-sub"><span>+2</span> this month</div>
+        </div>
+        <div class="iq-stat s-green">
+          <div class="iq-stat-label">Active Deployments</div>
+          <div class="iq-stat-val">8</div>
+          <div class="iq-stat-sub"><span>100%</span> uptime avg</div>
+        </div>
+        <div class="iq-stat s-red">
+          <div class="iq-stat-label">Failed Builds</div>
+          <div class="iq-stat-val">3</div>
+          <div class="iq-stat-sub"><span class="neg">↑1</span> vs last week</div>
+        </div>
+        <div class="iq-stat s-teal">
+          <div class="iq-stat-label">Avg Build Time</div>
+          <div class="iq-stat-val">42s</div>
+          <div class="iq-stat-sub"><span>↓8s</span> faster this week</div>
+        </div>
+      </div>
+
+      <!-- Build activity chart -->
+      <div class="iq-card">
+        <div class="iq-card-head">
+          <span class="iq-card-title">Build activity — last 14 days</span>
+          <div class="iq-tabs-inner">
+            <button class="iq-itab active">Builds</button>
+            <button class="iq-itab">Errors</button>
+            <button class="iq-itab">Duration</button>
+          </div>
+        </div>
+        <div class="iq-card-body">
+          <div class="iq-bars" id="activity-bars"></div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:var(--iq-muted);font-family:var(--iq-mono)">
+            <span>May 5</span><span>May 19</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two col -->
+      <div class="iq-two-col">
+
+        <!-- Deployments list -->
+        <div class="iq-card">
+          <div class="iq-card-head">
+            <span class="iq-card-title">Recent Deployments</span>
+            <button class="iq-btn-sm" onclick="sendPrompt('Show me all deployment details for DeployIQ')"><i class="ti ti-external-link"></i> View all</button>
+          </div>
+          <div class="iq-card-body" style="padding-top:4px;padding-bottom:4px">
+            <div class="iq-deploy-item" onclick="sendPrompt('What caused the frontend-v2 build to fail?')">
+              <div class="iq-deploy-dot fail"></div>
+              <div class="iq-deploy-info">
+                <div class="iq-deploy-name">frontend-v2</div>
+                <div class="iq-deploy-meta">prod · main@a3f9c12</div>
+              </div>
+              <div class="iq-deploy-right">
+                <div class="iq-badge fail">FAILED</div>
+                <div class="iq-deploy-time" style="margin-top:3px">12m ago</div>
+              </div>
+            </div>
+            <div class="iq-deploy-item" onclick="sendPrompt('Tell me about the api-service deployment')">
+              <div class="iq-deploy-dot building"></div>
+              <div class="iq-deploy-info">
+                <div class="iq-deploy-name">api-service</div>
+                <div class="iq-deploy-meta">prod · feat/auth@b21e4f8</div>
+              </div>
+              <div class="iq-deploy-right">
+                <div class="iq-badge building">BUILDING</div>
+                <div class="iq-deploy-time" style="margin-top:3px">2m ago</div>
+              </div>
+            </div>
+            <div class="iq-deploy-item" onclick="sendPrompt('Show logs for dashboard-ui deployment')">
+              <div class="iq-deploy-dot ok"></div>
+              <div class="iq-deploy-info">
+                <div class="iq-deploy-name">dashboard-ui</div>
+                <div class="iq-deploy-meta">prod · main@cc29d01</div>
+              </div>
+              <div class="iq-deploy-right">
+                <div class="iq-badge ok">LIVE</div>
+                <div class="iq-deploy-time" style="margin-top:3px">1h ago</div>
+              </div>
+            </div>
+            <div class="iq-deploy-item" onclick="sendPrompt('Tell me about the ml-worker service')">
+              <div class="iq-deploy-dot ok"></div>
+              <div class="iq-deploy-info">
+                <div class="iq-deploy-name">ml-worker</div>
+                <div class="iq-deploy-meta">staging · dev@9a1b77f</div>
+              </div>
+              <div class="iq-deploy-right">
+                <div class="iq-badge ok">LIVE</div>
+                <div class="iq-deploy-time" style="margin-top:3px">3h ago</div>
+              </div>
+            </div>
+            <div class="iq-deploy-item" onclick="sendPrompt('What is the auth-microservice project?')">
+              <div class="iq-deploy-dot idle"></div>
+              <div class="iq-deploy-info">
+                <div class="iq-deploy-name">auth-microservice</div>
+                <div class="iq-deploy-meta">staging · main@3f08ba2</div>
+              </div>
+              <div class="iq-deploy-right">
+                <div class="iq-badge idle">IDLE</div>
+                <div class="iq-deploy-time" style="margin-top:3px">1d ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right col -->
+        <div style="display:flex;flex-direction:column;gap:14px">
+
+          <!-- Uptime -->
+          <div class="iq-card">
+            <div class="iq-card-head">
+              <span class="iq-card-title">Uptime — 90 days</span>
+              <span style="font-size:11px;color:var(--iq-success);font-weight:500">99.7%</span>
+            </div>
+            <div class="iq-card-body" style="padding-top:8px;padding-bottom:8px">
+              <div class="iq-uptime-row" id="uptime-seg"></div>
+              <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--iq-muted)">
+                <span>90d ago</span><span>Today</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Env vars -->
+          <div class="iq-card">
+            <div class="iq-card-head">
+              <span class="iq-card-title"><i class="ti ti-key" style="font-size:13px;margin-right:4px"></i>Env Variables</span>
+              <button class="iq-btn-sm" onclick="sendPrompt('How do I add a new environment variable in DeployIQ?')"><i class="ti ti-plus"></i></button>
+            </div>
+            <div class="iq-card-body" style="padding-top:4px;padding-bottom:4px">
+              <div class="iq-env-item">
+                <div class="iq-env-key">DATABASE_URL</div>
+                <div class="iq-env-val">••••••••••••</div>
+                <i class="ti ti-eye" style="font-size:13px;color:var(--iq-muted);cursor:pointer"></i>
+              </div>
+              <div class="iq-env-item">
+                <div class="iq-env-key">OPENAI_API_KEY</div>
+                <div class="iq-env-val">••••••••••••</div>
+                <i class="ti ti-eye" style="font-size:13px;color:var(--iq-muted);cursor:pointer"></i>
+              </div>
+              <div class="iq-env-item">
+                <div class="iq-env-key">JWT_SECRET</div>
+                <div class="iq-env-val">••••••••••••</div>
+                <i class="ti ti-eye" style="font-size:13px;color:var(--iq-muted);cursor:pointer"></i>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Bottom row -->
+      <div class="iq-two-col">
+
+        <!-- Log terminal -->
+        <div class="iq-card">
+          <div class="iq-card-head">
+            <span class="iq-card-title"><i class="ti ti-terminal-2" style="font-size:13px;margin-right:4px"></i>Build Logs — frontend-v2</span>
+            <span class="iq-badge fail" style="font-size:10px">FAILED</span>
+          </div>
+          <div class="iq-card-body">
+            <div class="iq-log-box">
+              <div class="iq-log-line"><span class="iq-log-time">12:04:01</span><span class="iq-log-info">Pulling repo from GitHub...</span></div>
+              <div class="iq-log-line"><span class="iq-log-time">12:04:03</span><span>Installing dependencies (npm install)</span></div>
+              <div class="iq-log-line"><span class="iq-log-time">12:04:18</span><span class="iq-log-ok">✓ Packages installed (347 packages)</span></div>
+              <div class="iq-log-line"><span class="iq-log-time">12:04:19</span><span>Running build script...</span></div>
+              <div class="iq-log-line"><span class="iq-log-time">12:04:20</span><span class="iq-log-err">npm ERR! Missing script: "start"</span></div>
+              <div class="iq-log-line"><span class="iq-log-time">12:04:20</span><span class="iq-log-err">npm ERR! Did you mean one of these?</span></div>
+              <div class="iq-log-line"><span class="iq-log-time">12:04:20</span><span class="iq-log-err">npm ERR!   npm run dev</span></div>
+              <div class="iq-log-line"><span class="iq-log-time">12:04:20</span><span class="iq-log-warn">Build failed. Exit code: 1</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI error panel -->
+        <div class="iq-card">
+          <div class="iq-card-head">
+            <div style="display:flex;align-items:center;gap:7px">
+              <div class="iq-ai-icon">✦</div>
+              <span class="iq-card-title">AI Error Analyzer</span>
+            </div>
+            <span class="iq-ai-badge">Auto-detected</span>
+          </div>
+          <div class="iq-card-body" style="display:flex;flex-direction:column;gap:10px">
+            <div class="iq-ai-error">npm ERR! Missing script: "start"</div>
+            <div class="iq-ai-explain">Your <code style="color:#a78bfa;font-size:11px">package.json</code> doesn't have a <code style="color:#a78bfa;font-size:11px">start</code> script defined. DeployIQ runs <code style="color:#a78bfa;font-size:11px">npm start</code> by default to launch your application.</div>
+            <div class="iq-ai-fix">
+              <div class="iq-ai-fix-label">Suggested fix — add to package.json</div>
+              "scripts": {<br>
+              &nbsp;&nbsp;"start": "node server.js",<br>
+              &nbsp;&nbsp;"dev": "nodemon server.js"<br>
+              }
+            </div>
+            <button class="iq-btn-sm" style="width:100%;justify-content:center" onclick="sendPrompt('Explain more about the npm start script error and how to fix it')">
+              Ask AI for more help ↗
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const bars = document.getElementById('activity-bars');
+const data = [3,5,2,8,6,4,9,7,5,11,4,6,8,3];
+const max = Math.max(...data);
+const colors = ['#6c63ff','#6c63ff','#ff4f6a','#6c63ff','#6c63ff','#ff4f6a','#6c63ff','#6c63ff','#6c63ff','#6c63ff','#ff4f6a','#6c63ff','#6c63ff','#6c63ff'];
+data.forEach((v, i) => {
+  const b = document.createElement('div');
+  b.className = 'iq-bar';
+  b.style.height = Math.round((v / max) * 100) + '%';
+  b.style.background = colors[i];
+  b.style.opacity = '0.7';
+  b.title = `${v} builds`;
+  bars.appendChild(b);
+});
+
+const uptime = document.getElementById('uptime-seg');
+for (let i = 0; i < 90; i++) {
+  const s = document.createElement('div');
+  s.className = 'iq-uptime-seg';
+  const r = Math.random();
+  s.style.background = r > 0.05 ? 'var(--iq-success)' : r > 0.02 ? 'var(--iq-warn)' : 'var(--iq-danger)';
+  s.style.opacity = r > 0.05 ? '0.7' : '0.9';
+  uptime.appendChild(s);
+}
+
+document.querySelectorAll('.iq-tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.iq-tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+  });
+});
+document.querySelectorAll('.iq-itab').forEach(t => {
+  t.addEventListener('click', () => {
+    const p = t.closest('.iq-tabs-inner');
+    p.querySelectorAll('.iq-itab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+  });
+});
+document.querySelectorAll('.iq-sicon').forEach(s => {
+  s.addEventListener('click', () => {
+    document.querySelectorAll('.iq-sicon').forEach(x => x.classList.remove('active'));
+    s.classList.add('active');
+  });
+});
+</script>
