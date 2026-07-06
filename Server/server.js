@@ -15,7 +15,7 @@ import { Server } from "socket.io";
 // Config
 // ============================================
 
-import connectDB from "./src/config/db.js";
+import connectDB from "./Src/config/db.js";
 
 // ============================================
 // Routes
