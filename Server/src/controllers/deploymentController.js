@@ -1,8 +1,7 @@
 // server/src/controllers/deploymentController.js
 // Day 18 — Deployment Queue added
 
-import Deployment from "../models/deployment.js";
-
+import Deployment from "../models/Deployment.js";
 // ======================================
 // QUEUE SYSTEM
 // ======================================

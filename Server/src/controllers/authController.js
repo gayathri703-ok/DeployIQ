@@ -5,8 +5,7 @@
 
 import jwt from "jsonwebtoken";
 
-import User from "../models/user.js";  // ✅ correct
-
+import User from "../models/User.js";
 // ============================================
 // Generate JWT
 // ============================================

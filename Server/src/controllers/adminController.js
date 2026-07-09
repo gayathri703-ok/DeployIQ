@@ -2,7 +2,7 @@
 
 import User       from "../models/User.js";
 import Project    from "../models/Project.js";
-import Deployment from "../models/deployment.js";
+import Deployment from "../models/Deployment.js";
 
 // ======================================
 // GET ADMIN SUMMARY

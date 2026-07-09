@@ -1,6 +1,5 @@
-import Project from "../models/project.js";
-import Deployment from "../models/deployment.js";
-
+import Project from "../models/Project.js";
+import Deployment from "../models/Deployment.js";
 export const getAnalytics = async (
   req,
   res
