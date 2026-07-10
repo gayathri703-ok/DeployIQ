@@ -1,230 +1,442 @@
-# DeployIQ — Backend
+# 🚀 DeployIQ — AI-Powered Deployment Automation Platform
 
-> AI-Powered Deployment Platform Backend (Like Vercel / Railway)
+<div align="center">
 
----
+![DeployIQ Banner](https://img.shields.io/badge/DeployIQ-Deployment%20Platform-blue?style=for-the-badge&logo=rocket)
 
-## 🗓 21-Day Roadmap — Implementation Checklist
+[![React](https://img.shields.io/badge/React-18.2-61DAFB?style=flat-square&logo=react)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=flat-square&logo=node.js)](https://nodejs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=flat-square&logo=mongodb)](https://mongodb.com/)
+[![Socket.IO](https://img.shields.io/badge/Socket.IO-4.x-010101?style=flat-square&logo=socket.io)](https://socket.io/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker)](https://docker.com/)
+[![Vercel](https://img.shields.io/badge/Frontend-Vercel-000000?style=flat-square&logo=vercel)](https://deploy-iq-mjm7.vercel.app)
+[![Render](https://img.shields.io/badge/Backend-Render-46E3B7?style=flat-square&logo=render)](https://deployiq-1.onrender.com)
 
-### Days 1–7: Foundation
+**A full-stack DevOps platform inspired by Vercel, Render, and Railway.**
+Deploy GitHub repositories, monitor containers, manage environments — all from one dashboard.
 
-| Day | Task | File | Status |
-|-----|------|------|--------|
-| Day 1 | Project Setup, Express, Folder Structure | `server.js` | ✅ |
-| Day 2 | MongoDB Setup, Connect, Test | `config/db.js` | ✅ |
-| Day 3 | Authentication (Register/Login/JWT) | `controllers/authController.js`, `middleware/auth.js` | ✅ |
-| Day 4 | User & Project APIs | `controllers/userController.js` | ✅ |
-| Day 5 | GitHub Integration (OAuth) | `controllers/githubController.js` | ✅ |
-| Day 6 | Clone Repository | `controllers/dockerController.js → cloneRepo` | ✅ |
-| Day 7 | Docker Setup + Test API | `controllers/dockerController.js → dockerInfo` | ✅ |
+🌐 **Live Demo:** [deploy-iq-mjm7.vercel.app](https://deploy-iq-mjm7.vercel.app)
 
-### Days 8–14: Core Engine
+[Features](#-features) · [Demo](#-live-demo) · [Installation](#-installation) · [API Docs](#-api-documentation) · [Architecture](#-architecture)
 
-| Day | Task | File | Status |
-|-----|------|------|--------|
-| Day 8 | Generate Dockerfile | `controllers/dockerController.js → generateDockerfile` | ✅ |
-| Day 9 | Build Docker Image | `controllers/dockerController.js → buildImage` | ✅ |
-| Day 10 | Run Docker Container + Get Live URL | `controllers/dockerController.js → runContainer` | ✅ |
-| Day 11 | (Get Live URL generated in deployController) | `controllers/deployController.js` | ✅ |
-| Day 12 | Deployment Logs (Save to DB) | `models/Deployment.js → Log`, `routes/logRoutes.js` | ✅ |
-| Day 13 | Get Logs API + Formatted Output | `routes/logRoutes.js` | ✅ |
-| Day 14 | Stop Container + Delete Deployment API | `controllers/deployController.js → deleteDeployment` | ✅ |
-
-### Days 15–21: Advanced Features
-
-| Day | Task | File | Status |
-|-----|------|------|--------|
-| Day 15 | Real-Time Logs (Socket.IO) | `server.js → io setup`, `deployController.js → saveLog` | ✅ |
-| Day 16 | Framework Detection | `controllers/dockerController.js → detectFramework` | ✅ |
-| Day 17 | Environment Variables (Encrypted) | `controllers/envVarController.js` | ✅ |
-| Day 18 | Restart / Rebuild APIs | `controllers/deployController.js → createDeployment` | ✅ |
-| Day 19 | Reverse Proxy with NGINX | `controllers/nginxController.js`, `nginx/nginx.conf` | ✅ |
-| Day 20 | Production Deployment (Docker + Compose) | `Dockerfile`, `docker-compose.yml` | ✅ |
-| Day 21 | Custom Domains + SSL Setup | `nginx/nginx.conf` (add certbot step below) | ✅ |
+</div>
 
 ---
 
-## 🚀 Quick Start
+## 📸 Screenshots
 
+| Dashboard | Deployment Logs |
+|-----------|----------------|
+| ![Dashboard](screenshots/dashboard.png) | ![Logs](screenshots/logs.png) |
+
+| Monitoring | Admin Dashboard |
+|------------|-----------------|
+| ![Monitoring](screenshots/monitoring.png) | ![Admin](screenshots/admin.png) |
+
+| Projects | Deployments |
+|----------|-------------|
+| ![Projects](screenshots/projects.png) | ![Deployments](screenshots/deployments.png) |
+
+---
+
+## 🌐 Live Demo
+
+| Service | URL |
+|---------|-----|
+| 🌐 Frontend | [deploy-iq-mjm7.vercel.app](https://deploy-iq-mjm7.vercel.app) |
+| ⚙️ Backend API | [deployiq-1.onrender.com](https://deployiq-1.onrender.com) |
+| 📂 GitHub Repo | [github.com/gayathri703-ok/DeployIQ](https://github.com/gayathri703-ok/DeployIQ) |
+
+---
+
+## ✨ Features
+
+### 🔐 Authentication
+- JWT-based login and registration
+- Protected routes
+- Forgot password flow
+- Persistent sessions
+
+### 📁 Project Management
+- Create and manage deployment projects
+- GitHub repository integration
+- Branch selection
+- Automatic framework detection (React, Next.js, Vue, Express, Node.js)
+
+### 🚀 Deployment System
+- One-click deployments
+- **Real-time log streaming** via Socket.IO
+- **Deployment queue** — one deployment runs at a time
+- Rollback to any previous deployment
+- Deployment history with timestamps
+
+### 📡 Real-Time Features
+- Live deployment logs (no page refresh)
+- Pipeline step progress indicator
+- WebSocket-powered status updates
+- Auto-scroll terminal UI
+
+### 📊 Analytics & Monitoring
+- **Monitoring Dashboard** — CPU, Memory, Disk usage with live gauges
+- **CI/CD Dashboard** — success rate, deployment trends
+- **Deployment Analytics** — total, successful, failed, rollbacks
+- Docker container status and stats
+
+### 🌍 Infrastructure
+- Docker container management (build, run, stop)
+- Nginx configuration generator
+- Environment variable management
+- Custom domain management
+
+### 🔔 Notifications
+- Toast notifications for all events (deploy, rollback, delete)
+- Real-time status updates via Socket.IO
+
+### 🔍 Search & Filters
+- Search deployments by ID or project
+- Filter by status (success, failed, running, queued)
+- Sort by date (newest/oldest)
+- Project search with status filters
+
+### 👑 Admin Dashboard
+- Total users, projects, deployments overview
+- Success rate analytics
+- Recent users and deployments
+- Project and deployment status breakdown
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+| Technology | Purpose |
+|------------|---------|
+| React 18 | UI framework |
+| React Router v6 | Client-side routing |
+| Socket.IO Client | Real-time communication |
+| Axios | HTTP requests |
+| React Hot Toast | Notifications |
+| Recharts | Analytics charts |
+| Tailwind CSS | Styling |
+| Zustand | State management |
+
+### Backend
+| Technology | Purpose |
+|------------|---------|
+| Node.js | Runtime |
+| Express.js | Web framework |
+| MongoDB + Mongoose | Database |
+| Socket.IO | WebSocket server |
+| JWT | Authentication |
+| bcryptjs | Password hashing |
+| systeminformation | System metrics |
+| Dockerode | Docker API |
+| simple-git | Git operations |
+
+### DevOps & Deployment
+| Technology | Purpose |
+|------------|---------|
+| Docker | Container runtime |
+| Nginx | Reverse proxy / config generation |
+| GitHub API | Repository integration |
+| MongoDB Atlas | Cloud database |
+| Vercel | Frontend hosting |
+| Render | Backend hosting |
+
+---
+
+## 🏗 Architecture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│              CLIENT (React) — Vercel                     │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐  │
+│  │Dashboard │ │Projects  │ │Deployments│ │Monitoring│  │
+│  └──────────┘ └──────────┘ └──────────┘ └──────────┘  │
+│         │           │            │              │        │
+│         └───────────┴────────────┴──────────────┘       │
+│                          │                               │
+│              Axios (REST) + Socket.IO                    │
+└──────────────────────────┼──────────────────────────────┘
+                           │
+┌──────────────────────────┼──────────────────────────────┐
+│         SERVER (Express + Socket.IO) — Render            │
+│                          │                               │
+│  ┌─────────────────────────────────────────────────┐    │
+│  │                  API Routes                      │    │
+│  │  /api/auth  /api/projects  /api/deployments      │    │
+│  │  /api/monitoring  /api/admin  /api/docker        │    │
+│  └─────────────────────────────────────────────────┘    │
+│                          │                               │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐  │
+│  │Deployment│ │ Queue    │ │ Socket   │ │Monitoring│  │
+│  │Pipeline  │ │ System   │ │ Events   │ │ Service  │  │
+│  └──────────┘ └──────────┘ └──────────┘ └──────────┘  │
+└──────────────────────────┼──────────────────────────────┘
+                           │
+        ┌──────────────────┼──────────────────┐
+        │                  │                   │
+   ┌────┴────┐      ┌──────┴──────┐    ┌──────┴──────┐
+   │ MongoDB │      │   Docker    │    │    Nginx    │
+   │  Atlas  │      │ Containers  │    │   Config    │
+   └─────────┘      └─────────────┘    └─────────────┘
+```
+
+### Deployment Pipeline
+```
+GitHub Repo
+    │
+    ▼
+Clone Repository
+    │
+    ▼
+Detect Framework
+    │
+    ▼
+Install Dependencies
+    │
+    ▼
+Build Project
+    │
+    ▼
+Create Docker Image
+    │
+    ▼
+Start Container
+    │
+    ▼
+Generate Nginx Config
+    │
+    ▼
+🎉 Deployment Live
+```
+
+---
+
+## 📦 Installation
+
+### Prerequisites
+- Node.js 18+
+- MongoDB (local or Atlas)
+- Docker (optional, for container features)
+- Git
+
+### 1. Clone the Repository
 ```bash
-# 1. Clone / open this folder in VS Code
-cd deployiq-backend
+git clone https://github.com/gayathri703-ok/DeployIQ.git
+cd DeployIQ
+```
 
-# 2. Install dependencies
+### 2. Backend Setup
+```bash
+cd Server
 npm install
-
-# 3. Set up environment
-cp .env.example .env
-# Edit .env with your MongoDB URI, GitHub OAuth keys, OpenAI key
-
-# 4. Start MongoDB (if running locally)
-mongod
-
-# 5. Start the dev server
-npm run dev
-# → Server running at http://localhost:5000
 ```
 
-## 🐳 Docker / Production Start
+Create `Server/.env`:
+```env
+PORT=5000
+NODE_ENV=development
+MONGO_URI=mongodb+srv://your-connection-string
+JWT_SECRET=your_super_secret_key
+JWT_EXPIRE=7d
+FRONTEND_URL=http://localhost:3000
+DOCKER_HOST=/var/run/docker.sock
+ENCRYPTION_KEY=your_32_char_key
+GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+GITHUB_CALLBACK_URL=http://localhost:5000/api/github/callback
+```
 
+Start the server:
 ```bash
-# Build and start everything
-docker-compose up --build
+npm run dev
+```
 
-# Stop
-docker-compose down
+### 3. Frontend Setup
+```bash
+cd Server/client
+npm install
+```
+
+Create `Server/client/.env`:
+```env
+REACT_APP_API_URL=http://localhost:5000
+```
+
+Start the client:
+```bash
+npm start
+```
+
+### 4. Open the App
+```
+http://localhost:3000
 ```
 
 ---
 
-## 📡 API Endpoints Summary
+## 📡 API Documentation
 
-### Auth
-```
-POST   /api/auth/register     — Create account
-POST   /api/auth/login        — Login, get JWT
-POST   /api/auth/logout       — Logout
-GET    /api/auth/me           — Get current user
-```
+### Authentication
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/register` | Register new user |
+| POST | `/api/auth/login` | Login user |
+| POST | `/api/auth/forgot-password` | Send reset email |
 
-### Users & Projects
-```
-GET    /api/users/profile          — Your profile
-GET    /api/users/projects         — All your projects
-POST   /api/users/projects         — Create project
-GET    /api/users/projects/:id     — Project + deployments
-DELETE /api/users/projects/:id     — Delete project
-```
-
-### GitHub
-```
-GET    /api/github/connect         — Get OAuth redirect URL
-GET    /api/github/callback        — OAuth callback (GitHub redirects here)
-GET    /api/github/repos           — List your repos
-POST   /api/github/validate        — Check repo access
-DELETE /api/github/disconnect      — Unlink GitHub
-```
+### Projects
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/projects` | Get all projects |
+| POST | `/api/projects` | Create project |
+| GET | `/api/projects/:id` | Get single project |
+| PUT | `/api/projects/:id` | Update project |
+| DELETE | `/api/projects/:id` | Delete project |
 
 ### Deployments
-```
-POST   /api/deployments            — Trigger new deploy
-GET    /api/deployments            — List deployments
-GET    /api/deployments/:id        — Deployment + logs
-DELETE /api/deployments/:id        — Delete + stop container
-POST   /api/deployments/:id/rollback — Rollback
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/deployments` | Get all deployments |
+| POST | `/api/deployments` | Create deployment |
+| GET | `/api/deployments/queue` | Get queue status |
+| GET | `/api/deployments/:id` | Get single deployment |
+| DELETE | `/api/deployments/:id` | Delete deployment |
+| POST | `/api/deployments/:id/rollback` | Rollback deployment |
 
-### Logs
-```
-GET    /api/logs/:deploymentId     — Get build logs
-DELETE /api/logs/:deploymentId     — Clear logs
-```
+### Monitoring
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/monitoring/summary` | CPU, Memory, Disk, Containers |
+| GET | `/api/monitoring/system` | System stats only |
+| GET | `/api/monitoring/containers` | Docker container status |
 
-### Docker
-```
-GET    /api/docker/info            — Docker version/info
-POST   /api/docker/build           — Build image
-POST   /api/docker/run             — Start container
-POST   /api/docker/stop            — Stop container
-GET    /api/docker/logs/:id        — Container runtime logs
-```
+### Admin
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/admin/summary` | Full system overview |
+| GET | `/api/admin/users` | All users |
+| GET | `/api/admin/projects` | All projects |
 
-### Environment Variables
-```
-POST   /api/env                    — Add variable
-GET    /api/env/:projectId         — List (masked)
-GET    /api/env/:projectId/reveal/:id — Reveal value
-DELETE /api/env/:id                — Delete
-```
+---
 
-### NGINX
+## 🔌 Socket.IO Events
+
+### Client → Server
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `join-deployment` | `deploymentId` | Join deployment room |
+| `leave-deployment` | `deploymentId` | Leave deployment room |
+
+### Server → Client
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `deployment-log` | `string` | New log line |
+| `deployment-status` | `string` | Status change |
+| `queue-position` | `{ position }` | Queue update |
+
+---
+
+## 📁 Project Structure
+
 ```
-GET    /api/nginx                  — List proxy configs
-POST   /api/nginx                  — Create proxy
-DELETE /api/nginx/:subdomain       — Remove proxy
+DeployIQ/
+├── README.md
+├── Server/
+│   ├── server.js                 # Entry point + Socket.IO
+│   └── src/
+│       ├── config/
+│       │   └── db.js             # MongoDB connection
+│       ├── controllers/
+│       │   ├── authController.js
+│       │   ├── deploymentController.js
+│       │   ├── dockerController.js
+│       │   ├── monitoringController.js
+│       │   └── adminController.js
+│       ├── models/
+│       │   ├── User.js
+│       │   ├── Project.js
+│       │   └── deployment.js
+│       ├── routes/
+│       │   ├── authRoutes.js
+│       │   ├── deploymentRoutes.js
+│       │   ├── monitoringRoutes.js
+│       │   └── adminRoutes.js
+│       └── middleware/
+│           ├── authmiddleware.js
+│           ├── errorHandler.js
+│           └── rateLimitermiddleware.js
+│
+└── Server/client/
+    └── src/
+        ├── pages/
+        │   ├── auth/
+        │   ├── Dashboards/
+        │   ├── Deploymentpage.jsx
+        │   ├── moniteringDashboard.jsx
+        │   └── AdminDashboard.jsx
+        ├── layouts/
+        │   └── Dashboardlayouts.jsx
+        ├── api/
+        ├── store/
+        ├── utils/
+        │   └── toast.js
+        └── socket.js
 ```
 
 ---
 
-## 🔌 Real-Time Logs (Socket.IO)
+## 🎯 Key Implementation Highlights
 
-```js
-// Frontend — connect and listen
-import { io } from "socket.io-client";
+### Real-Time Deployment Logs
+Uses Socket.IO rooms — each deployment gets its own room. The pipeline emits log events as each step completes, streamed live to the browser without polling.
 
-const socket = io("http://localhost:5000");
+### Deployment Queue
+In-memory queue ensures only one deployment runs at a time. New deployments are added to the queue and processed automatically when the current one finishes.
 
-// Join a deployment room to get live logs
-socket.emit("join-deployment", deploymentId);
+### System Monitoring
+Uses the `systeminformation` npm package to read real CPU, memory, and disk metrics directly from the OS. Updates every 5 seconds via polling.
 
-socket.on("log", ({ level, message, timestamp }) => {
-  console.log(`[${level}] ${message}`);
-});
-
-socket.on("deployment-complete", ({ deployedUrl }) => {
-  console.log("Live at:", deployedUrl);
-});
-
-socket.on("deployment-failed", ({ error }) => {
-  console.error("Failed:", error);
-});
-```
+### Docker Integration
+Uses the `dockerode` library to communicate with the Docker daemon via Unix socket. Supports listing, starting, stopping containers and reading live stats.
 
 ---
 
-## 🔐 Day 21 — SSL with Certbot
+## 🏆 What This Project Demonstrates
 
-```bash
-# On your VPS (after pointing domain DNS to your server IP)
-sudo apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
-
-# Auto-renew
-sudo certbot renew --dry-run
-```
+| Skill | Implementation |
+|-------|----------------|
+| **Full-Stack Development** | React frontend + Node.js backend |
+| **Real-Time Communication** | Socket.IO WebSocket integration |
+| **Database Design** | MongoDB schemas, relationships, aggregation |
+| **Authentication** | JWT, bcrypt, protected routes |
+| **DevOps Concepts** | Docker, Nginx, CI/CD pipeline simulation |
+| **System Programming** | OS metrics, Docker API |
+| **Queue Systems** | In-memory deployment queue |
+| **REST API Design** | 20+ endpoints across 10+ resources |
+| **State Management** | Zustand store |
+| **Production Deployment** | Vercel + Render + MongoDB Atlas |
 
 ---
 
-## 📁 Folder Structure
+## 👤 Author
 
-```
-deployiq-backend/
-├── server.js              # Day 1 — entry point
-├── package.json
-├── Dockerfile             # Day 20
-├── docker-compose.yml     # Day 20
-├── .env.example
-├── config/
-│   └── db.js              # Day 2 — MongoDB
-├── controllers/
-│   ├── authController.js  # Day 3
-│   ├── userController.js  # Day 4
-│   ├── githubController.js # Day 5-6
-│   ├── dockerController.js # Day 7-9, 13
-│   ├── deployController.js # Day 12, 14-15, 18
-│   ├── envVarController.js # Day 17
-│   └── nginxController.js  # Day 19
-├── middleware/
-│   ├── auth.js            # Day 3 — JWT protect
-│   ├── errorHandler.js
-│   └── rateLimiter.js
-├── models/
-│   ├── User.js            # Day 3
-│   ├── Project.js         # Day 4
-│   └── Deployment.js      # Day 12 (+ Log + EnvVar)
-├── routes/
-│   ├── authRoutes.js
-│   ├── userRoutes.js
-│   ├── githubRoutes.js
-│   ├── repoRoutes.js
-│   ├── dockerRoutes.js
-│   ├── deployRoutes.js
-│   ├── logRoutes.js
-│   ├── envVarRoutes.js
-│   └── nginxRoutes.js
-├── services/
-│   └── aiService.js       # Day 14+ — OpenAI
-├── nginx/
-│   └── nginx.conf         # Day 19
-└── repos/                 # Cloned repos (gitignored)
-```
+**Gayathri**
+- 🐙 GitHub: [@gayathri703-ok](https://github.com/gayathri703-ok)
+- 💼 LinkedIn: [linkedin.com/in/gayathri703](https://www.linkedin.com/in/gayathri703)
+- 🌐 Live Project: [deploy-iq-mjm7.vercel.app](https://deploy-iq-mjm7.vercel.app)
+- 📂 Repository: [github.com/gayathri703-ok/DeployIQ](https://github.com/gayathri703-ok/DeployIQ)
+
+---
+
+## 📄 License
+
+MIT License — feel free to use this project as a reference or template.
+
+---
+
+<div align="center">
+  <strong>Built with ❤️ as a portfolio project to demonstrate full-stack + DevOps skills</strong>
+  <br><br>
+  <a href="https://github.com/gayathri703-ok/DeployIQ">⭐ Star this repo if you found it helpful!</a>
+</div>
