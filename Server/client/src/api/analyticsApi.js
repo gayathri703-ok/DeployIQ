@@ -1,15 +1,41 @@
-import axios from "axios";
+// ============================================
+// Analytics API
+// ============================================
 
-const API_URL = "http://localhost:5000/api/analytics";
+import api from "./axios";
+
+// ============================================
+// Get Analytics Summary
+// ============================================
 
 export const getAnalytics = async () => {
-  const token = localStorage.getItem("token");
+  const response = await api.get("/api/analytics");
+  return response.data;
+};
 
-  const response = await axios.get(API_URL, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+// ============================================
+// Get Deployment Analytics
+// ============================================
 
+export const getDeploymentAnalytics = async () => {
+  const response = await api.get("/api/analytics/deployments");
+  return response.data;
+};
+
+// ============================================
+// Get Project Analytics
+// ============================================
+
+export const getProjectAnalytics = async () => {
+  const response = await api.get("/api/analytics/projects");
+  return response.data;
+};
+
+// ============================================
+// Get User Analytics
+// ============================================
+
+export const getUserAnalytics = async () => {
+  const response = await api.get("/api/analytics/users");
   return response.data;
 };
