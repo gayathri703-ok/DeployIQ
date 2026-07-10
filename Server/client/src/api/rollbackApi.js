@@ -1,15 +1,22 @@
 import axios from "axios";
 
-const API_URL =
-  "http://localhost:5000/api/rollback";
+// ✅ Use environment variable
+const API_URL = `${process.env.REACT_APP_API_URL || "http://localhost:5000"}/api/rollback`;
 
-export const rollbackDeployment =
-  async (deploymentId) => {
+const getAuthConfig = () => {
+  const token =
+    localStorage.getItem("diq_token") ||
+    localStorage.getItem("token");
+  return {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+};
 
-    const response =
-      await axios.post(
-        `${API_URL}/${deploymentId}`
-      );
-
-    return response.data;
+export const rollbackDeployment = async (deploymentId) => {
+  const response = await axios.post(
+    `${API_URL}/${deploymentId}`,
+    {},
+    getAuthConfig()
+  );
+  return response.data;
 };

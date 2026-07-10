@@ -1,33 +1,28 @@
 import axios from "axios";
 
-const API =
-  "http://localhost:5000/api/domains";
+// ✅ Use environment variable
+const API = `${process.env.REACT_APP_API_URL || "http://localhost:5000"}/api/domains`;
 
-export const getDomains =
-  async () => {
-    const response =
-      await axios.get(API);
-
-    return response.data;
+const getAuthConfig = () => {
+  const token =
+    localStorage.getItem("diq_token") ||
+    localStorage.getItem("token");
+  return {
+    headers: { Authorization: `Bearer ${token}` },
   };
+};
 
-export const createDomain =
-  async (data) => {
-    const response =
-      await axios.post(
-        API,
-        data
-      );
+export const getDomains = async () => {
+  const response = await axios.get(API, getAuthConfig());
+  return response.data;
+};
 
-    return response.data;
-  };
+export const createDomain = async (data) => {
+  const response = await axios.post(API, data, getAuthConfig());
+  return response.data;
+};
 
-export const deleteDomain =
-  async (id) => {
-    const response =
-      await axios.delete(
-        `${API}/${id}`
-      );
-
-    return response.data;
-  };
+export const deleteDomain = async (id) => {
+  const response = await axios.delete(`${API}/${id}`, getAuthConfig());
+  return response.data;
+};
