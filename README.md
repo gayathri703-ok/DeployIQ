@@ -25,16 +25,13 @@ A full-stack DevOps dashboard inspired by Vercel, Render, and Railway — deploy
 
 | Dashboard | Deployment Logs | Monitoring |
 |:--:|:--:|:--:|
-| ![Dashboard](Server/client/src/pages/Dashboards/Screenshots/Dashboard.png) | ![Deployment Logs](Server/client/src/pages/Dashboards/Screenshots/DeploymentsLogs.png) | ![Monitoring](Server/client/src/pages/Dashboards/Screenshots/Monitoring.png) |
+| ![Dashboard](screenshots/dashboard.png) | ![Deployment Logs](screenshots/logs.png) | ![Monitoring](screenshots/monitoring.png) |
 | Real-time build activity | Live streaming logs | CPU / memory / disk gauges |
 
 | Admin Dashboard | Projects | Deployments |
 |:--:|:--:|:--:|
-| ![Admin Dashboard](Server/client/src/pages/Dashboards/Screenshots/AdminDashboard.png) | ![Projects](Server/client/src/pages/Dashboards/Screenshots/Projects.png) | ![Deployments](Server/client/src/pages/Dashboards/Screenshots/Deployments.png) |
+| ![Admin Dashboard](screenshots/admin.png) | ![Projects](screenshots/projects.png) | ![Deployments](screenshots/deployments.png) |
 | System-wide overview | GitHub repository list | Deployment queue |
-
----
-
 ## ✨ Features
 
 ### Authentication
@@ -409,12 +406,12 @@ Copy the connection string into MONGO_URI
 ---
 
 ## 👤 Author
-
-**Your Name**
-[GitHub](https://github.com/yourusername) · [LinkedIn](https://linkedin.com/in/yourprofile) · [Portfolio](https://yourportfolio.com)
-
+ 
+**Gayathri**
+- 🐙 GitHub: [@gayathri703-ok](https://github.com/gayathri703-ok/DeployIQ)
+- 💼 LinkedIn: [linkedin.com/in/gayathri703](https://www.linkedin.com/in/gayathri703)
+- 🌐 Live: [deploy-iq-mjm7.vercel.app](https://deploy-iq-mjm7.vercel.app)
 ---
-
 ## 📄 License
 
 Released under the [MIT License](LICENSE) — free to use as a reference or template.
