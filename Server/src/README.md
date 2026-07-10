@@ -342,6 +342,13 @@ http://localhost:3000
 ```
 DeployIQ/
 ├── README.md
+├── screenshots/
+│   ├── dashboard.png
+│   ├── logs.png
+│   ├── monitoring.png
+│   ├── admin.png
+│   ├── projects.png
+│   └── deployments.png
 ├── Server/
 │   ├── server.js                 # Entry point + Socket.IO
 │   └── src/
