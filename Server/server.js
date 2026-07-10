@@ -36,8 +36,8 @@ import domainRoutes     from "./src/routes/domainRoutes.js";
 import rollbackRoutes   from "./src/routes/rollbackRoutes.js";
 import pipelineRoutes   from "./src/routes/pipelineRoutes.js";
 import cicdRoutes       from "./src/routes/cicdRoutes.js";
-import monitoringRoutes from "./src/routes/monitoringRoutes.js"; // Day 19
-import adminRoutes      from "./src/routes/adminRoutes.js";      // ✅ Day 22
+import monitoringRoutes from "./src/routes/monitoringRoutes.js";
+import adminRoutes      from "./src/routes/adminRoutes.js";
 
 // ============================================
 // Middleware
@@ -53,6 +53,38 @@ import rateLimiter  from "./src/middleware/rateLimitermiddleware.js";
 dotenv.config();
 
 // ============================================
+// CORS Options — allows all Vercel URLs
+// ============================================
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, Postman)
+    if (!origin) return callback(null, true);
+
+    const allowedOrigins = [
+      "http://localhost:3000",
+      "http://localhost:5000",
+      "https://deploy-iq-mjm7.vercel.app",
+    ];
+
+    // Allow any vercel.app preview URL or localhost
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.includes("vercel.app") ||
+      origin.includes("localhost")
+    ) {
+      callback(null, true);
+    } else {
+      console.log("CORS blocked origin:", origin);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+// ============================================
 // App Init
 // ============================================
 
@@ -62,12 +94,22 @@ app.set("trust proxy", 1);
 const httpServer = createServer(app);
 
 // ============================================
-// Socket.IO Setup
+// Socket.IO Setup — allows all Vercel URLs
 // ============================================
 
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    origin: function (origin, callback) {
+      if (
+        !origin ||
+        origin.includes("vercel.app") ||
+        origin.includes("localhost")
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -97,10 +139,7 @@ io.on("connection", (socket) => {
 // ============================================
 
 app.use(helmet());
-app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:3000",
-  credentials: true,
-}));
+app.use(cors(corsOptions));          // ✅ updated CORS
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
@@ -125,8 +164,8 @@ app.use("/api/domains",    domainRoutes);
 app.use("/api/pipeline",   pipelineRoutes);
 app.use("/api/cicd",       cicdRoutes);
 app.use("/api/rollback",   rollbackRoutes);
-app.use("/api/monitoring", monitoringRoutes); // Day 19
-app.use("/api/admin",      adminRoutes);      // ✅ Day 22
+app.use("/api/monitoring", monitoringRoutes);
+app.use("/api/admin",      adminRoutes);
 
 // ============================================
 // Root Route
